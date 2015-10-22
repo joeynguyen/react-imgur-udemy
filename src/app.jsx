@@ -14,7 +14,10 @@ var Hello = React.createClass({
 
 var Child1 = React.createClass({
     render: function() {
-        return <h2>I'm Child1</h2>
+        return <h2>
+            I'm Child1
+            {this.props.children}
+        </h2>
     }
 });
 
@@ -27,7 +30,9 @@ var Child2 = React.createClass({
 var routes = (
     <Router history={new HashHistory}>
         <Route path="/" component={Hello}>
-            <Route path="1" component={Child1} />
+            <Route path="1" component={Child1}>
+                <Route path="2" component={Child2} />
+            </Route>
             <Route path="2" component={Child2} />
         </Route>
     </Router>
