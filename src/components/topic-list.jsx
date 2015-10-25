@@ -2,6 +2,8 @@ var React = require('react');
 var Reflux = require('reflux');
 var TopicStore = require('../stores/topic-store');
 var Actions = require('../actions');
+var Router = require('react-router');
+var Link = Router.Link;
 
 module.exports = React.createClass({
     mixins: [
@@ -18,14 +20,15 @@ module.exports = React.createClass({
     render: function() {
         return <div className="list-group">
             Topic List
-            <ul>
-                {this.renderTopics()}
-            </ul>
+            {this.renderTopics()}
         </div>
     },
     renderTopics: function() {
         return this.state.topics.map(function(topic) {
-            return <li>{topic.name}</li>
+            return <Link to={"topic/" + topic.id} className="list-group-item" key={topic.id}>
+                <h4>{topic.name}</h4>
+                <p>{topic.description}</p>
+                </Link>
         });
     },
     onChange: function(event, topics) {
