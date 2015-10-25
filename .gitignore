@@ -1,4 +1,5 @@
 node_modules/
+api-key*
 main.js
 style.css
 *.log
