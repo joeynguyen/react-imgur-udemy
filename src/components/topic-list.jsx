@@ -10,11 +10,8 @@ module.exports = React.createClass({
     componentWillMount: function() {
         Api.get('topics/defaults')
             .then(function(data) {
-                var topicList = [];
-                var categories = data.data;
-                categories.map(function(item) { topicList.push(item.name) });
                 this.setState({
-                    topics: topicList
+                    topics: data.data
                 });
             }.bind(this));
     },
@@ -28,7 +25,7 @@ module.exports = React.createClass({
     },
     renderTopics: function() {
         return this.state.topics.map(function(topic) {
-            return <li>{topic}</li>
+            return <li>{topic.name}</li>
         });
     }
 });
