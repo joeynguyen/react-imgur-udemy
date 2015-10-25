@@ -2,21 +2,33 @@ var React = require('react');
 var Api = require('../utils/api');
 
 module.exports = React.createClass({
+    getInitialState: function() {
+        return {
+            topics: []
+        }
+    },
+    componentWillMount: function() {
+        Api.get('topics/defaults')
+            .then(function(data) {
+                var topicList = [];
+                var categories = data.data;
+                categories.map(function(item) { topicList.push(item.name) });
+                this.setState({
+                    topics: topicList
+                });
+            }.bind(this));
+    },
     render: function() {
         return <div className="list-group">
             Topic List
             <ul>
-                {this.getTopics()}
+                {this.renderTopics()}
             </ul>
         </div>
     },
-    getTopics: function() {
-        var list = [];
-        Api.get('topics/defaults')
-            .then(function(data) {
-                var categories = data.data;
-                categories.map(function(item) { list.push(item.name) });
-                console.log(list);
-            })
+    renderTopics: function() {
+        return this.state.topics.map(function(topic) {
+            return <li>{topic}</li>
+        });
     }
 });
