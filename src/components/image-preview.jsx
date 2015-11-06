@@ -1,4 +1,6 @@
 var React = require('react');
+var Router = require('react-router');
+var Link = Router.Link;
 
 module.exports = React.createClass({
     getInitialState: function() {
@@ -7,7 +9,7 @@ module.exports = React.createClass({
         }
     },
     render: function() {
-        return <div
+        return <Link to={"images/" + this.props.id}
             className="image-preview"
             onMouseEnter={this.handleMouseEnter}
             onMouseLeave={this.handleMouseLeave}
@@ -15,7 +17,7 @@ module.exports = React.createClass({
             {this.state.hovering && this.props.animated ? this.video() : this.image()}
             {!this.state.hovering && this.props.animated ? this.icon() : null}
             {this.state.hovering ? this.inset() : null}
-        </div>
+        </Link>
     },
     handleMouseEnter: function() {
         this.setState({hovering: true});
