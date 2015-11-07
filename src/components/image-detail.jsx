@@ -1,18 +1,23 @@
 var React = require('react');
 var Reflux = require('reflux');
 var ImageStore = require('../stores/image-store');
+var CommentStore = require('../stores/comment-store');
 var Actions = require('../actions');
+var CommentBox = require('./comment-box');
 
 module.exports = React.createClass({
     mixins: [
-        Reflux.listenTo(ImageStore, 'onChange')
+        Reflux.listenTo(ImageStore, 'onChange'),
+        Reflux.listenTo(CommentStore, 'onChange')
     ],
     getInitialState: function() {
         return {
-            image: null
+            image: null,
+            comments: null
         }
     },
     componentWillMount: function() {
+        // Calls getImage from any stores that have that function (image store and comment store)
         Actions.getImage(this.props.params.id);
     },
     render: function() {
@@ -31,6 +36,8 @@ module.exports = React.createClass({
             <div className="panel-footer">
                 <h5>{this.state.image.description}</h5>
             </div>
+            <h3>Comments</h3>
+            {this.renderComments()}
         </div>
     },
     renderImage: function() {
@@ -42,9 +49,16 @@ module.exports = React.createClass({
             return <img src={this.state.image.link} />
         }
     },
+    renderComments: function() {
+        if(!this.state.comments) {
+            return null;
+        }
+        return <CommentBox comments={this.state.comments} />
+    },
     onChange: function() {
         this.setState({
-            image: ImageStore.find(this.props.params.id)
+            image: ImageStore.find(this.props.params.id),
+            comments: CommentStore.comment,
         });
     }
 });
