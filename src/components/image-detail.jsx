@@ -16,22 +16,20 @@ module.exports = React.createClass({
         Actions.getImage(this.props.params.id);
     },
     render: function() {
-        return <div>
+        return <div className="image-detail">
             {this.state.image ? this.renderContent() : null}
         </div>
     },
     renderContent: function() {
-        return <div>
-            <div className="panel panel-default">
-                <div className="panel-heading">
-                    <h4>{this.state.image.title}</h4>
-                </div>
-                <div className="panel-body">
-                    {this.renderImage()}
-                </div>
-                <div className="panel-footer">
-                    <h5>{this.state.image.description}</h5>
-                </div>
+        return <div className="panel panel-default">
+            <div className="panel-heading">
+                <h4>{this.state.image.title}</h4>
+            </div>
+            <div className="panel-body">
+                {this.renderImage()}
+            </div>
+            <div className="panel-footer">
+                <h5>{this.state.image.description}</h5>
             </div>
         </div>
     },
